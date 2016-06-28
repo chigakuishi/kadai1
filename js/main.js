@@ -3,7 +3,7 @@ window.onload = function(){
 	var game = new Game(360, 480);	// 360×480画面(Canvas)を作成
 	game.fps = 30;	// フレームレートの設定。30fpsに設定
 	// 画像データをあらかじめ読み込ませる
-	game.preload("images/droid.png", "images/beam.png", "images/apple.png", "images/laser.png", "images/effect0.png");
+	game.preload("images/monster.png", "images/beam.png", "images/base.png", "images/laser.png", "images/effect0.png");
 	game.rootScene.backgroundColor = "black";	// ゲームの背景色を黒色に設定
 	game.score = 0;	// スコアを入れる変数を用意する
 	// スコアを表示するラベルを作成
@@ -38,7 +38,7 @@ window.onload = function(){
 	game.onload = function(){
 		// 自機の設定
 		var fighter = new Sprite(32, 32);
-		fighter.image = game.assets["images/apple.png"];
+		fighter.image = game.assets["images/base.png"];
 		fighter.x = game.width/2;	// X座標
 		fighter.y = game.height - 40;	// Y座標
 		fighter._style.zIndex = 1;
@@ -207,7 +207,7 @@ window.onload = function(){
 		for(var y=0; y<5; y++){
 			for(var x=0; x<7; x++){
 				enemy[count] = new Sprite(32, 32);
-				enemy[count].image = game.assets["images/droid.png"];
+				enemy[count].image = game.assets["images/monster.png"];
 				enemy[count].x = x * (32+10);	// X座標
 				enemy[count].y = y * 32 + 30;	// Y座標
 				enemy[count]._style.zIndex = 2;	// Z座標
