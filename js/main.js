@@ -37,17 +37,17 @@ window.onload = function(){
 	// データの読み込みが完了したら処理
 	game.onload = function(){
 		// 自機の設定
-		var fighter = new Sprite(32, 32);
+		var fighter = new Sprite(64, 30);
 		fighter.image = game.assets["images/base.png"];
 		fighter.x = game.width/2;	// X座標
-		fighter.y = game.height - 40;	// Y座標
+		fighter.y = game.height - 60;	// Y座標
 		fighter._style.zIndex = 1;
 		game.rootScene.addChild(fighter);
 		// ビームの設定
 		var beam = new Sprite(32, 64);
 		beam.flag = false;	// ビームが発射されているかどうかのフラグ
-		beam.x = fighter.x + 14;	// 自機の中央に設置
-		beam.y = fighter.y - 8;	// 自機より少し上のY座標に設置
+		beam.x = fighter.x + 20;	// 自機の中央に設置
+		beam.y = fighter.y - 45;	// 自機より少し上のY座標に設置
 		beam.image = game.assets["images/beam.png"];
 		beam._style.zIndex = 2;
 		game.rootScene.addChild(beam);
@@ -61,7 +61,7 @@ window.onload = function(){
 		// 敵のレーザービームを初期化する
 		initEnemyLaser();
 		// 爆風の設定
-		var blast = new Sprite(30, 24);
+		var blast = new Sprite(40, 40);
 		blast.image = game.assets["images/effect0.png"];
 		blast.y = -9999;	// Y座標
 		blast._style.zIndex = 10;	// 爆風は一番手前に重なるようにする
@@ -77,6 +77,7 @@ window.onload = function(){
 			moveBlast();		// 爆発の処理を行う
 			hitCheck();	// ビームと敵の接触判定
 			hitCheckLaser();	// レーザービームと自機の接触判定
+
 			// =============== 各種処理 ==================
 			// ------------ ■ビームを移動させる -----------------
 			function moveBeam(){
@@ -92,8 +93,8 @@ window.onload = function(){
 					// Aボタンが押されたらビームを発射
 					if (game.input.a){
 						beam.flag = true;	// trueにしてビームが発射されている事を示すようにする
-						beam.x = fighter.x + 14;	// 自機の中央から出す
-						beam.y = fighter.y - 11;	// 自機より少し上のY座標から出す
+						beam.x = fighter.x + 20;	// 自機の中央から出す
+						beam.y = fighter.y - 45;	// 自機より少し上のY座標から出す
 					}
 				}
 			}
@@ -110,8 +111,8 @@ window.onload = function(){
 				}
 				// ビームが発射されていない場合は自機と一緒に移動
 				if (!beam.flag){
-					beam.x = fighter.x + 14;	// 自機の中央に設置
-					beam.y = fighter.y - 11;	// 自機より少し上のY座標に設置
+					beam.x = fighter.x + 20;	// 自機の中央に設置
+					beam.y = fighter.y - 45;	// 自機より少し上のY座標に設置
 				}
 			}
 			// ------------ ■敵を移動させる -----------------
@@ -165,14 +166,9 @@ window.onload = function(){
 			// ------------ ■自機と敵のレーザービームの接触判定を行う -----------------
 			function hitCheckLaser(){
 				// 自機の判定用に仮のオブジェクトを作成しXY座標と幅を設定する
-				var temp = {
-					x : fighter.x+4,
-					y : fighter.y+12,
-					width : 24,
-					height: 20
-				}
+
 				for(var i=0; i<maxLaser; i++){
-					if (enemyLaser[i].intersect(temp)){	// 接触したらゲームオーバー
+					if (enemyLaser[i].intersect(fighter)){	// 接触したらゲームオーバー
 						game.rootScene.backgroundColor = "red";	// ゲームの背景色を赤色に設定
 						game.stop();
 						alert("自機が破壊されました。もう駄目です。スコアは"+game.score+"点でした");
@@ -180,6 +176,7 @@ window.onload = function(){
 					}
 				}
 			}
+
 			// ■爆発開始処理
 			function startBlast(sx, sy){
 				blast.flag = true;	// 爆風発生
@@ -197,6 +194,7 @@ window.onload = function(){
 				}
 			}
 		});
+
 	}
 	// ゲーム処理開始
 	game.start();
